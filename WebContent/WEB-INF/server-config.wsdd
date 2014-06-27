@@ -1,0 +1,87 @@
+<ns1:deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java" xmlns:ns1="http://xml.apache.org/axis/wsdd/">
+ <ns1:globalConfiguration>
+  <ns1:parameter name="sendMultiRefs" value="true"/>
+  <ns1:parameter name="disablePrettyXML" value="true"/>
+  <ns1:parameter name="adminPassword" value="admin"/>
+  <ns1:parameter name="attachments.Directory" value="C:\Program Files\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\VitalSignWS\WEB-INF\attachments"/>
+  <ns1:parameter name="dotNetSoapEncFix" value="true"/>
+  <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
+  <ns1:parameter name="sendXMLDeclaration" value="true"/>
+  <ns1:parameter name="sendXsiTypes" value="true"/>
+  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
+  <ns1:requestFlow>
+   <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
+    <ns1:parameter name="scope" value="session"/>
+   </ns1:handler>
+   <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
+    <ns1:parameter name="scope" value="request"/>
+    <ns1:parameter name="extension" value=".jwr"/>
+   </ns1:handler>
+  </ns1:requestFlow>
+ </ns1:globalConfiguration>
+ <ns1:handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper"/>
+ <ns1:handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
+ <ns1:handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
+ <ns1:service name="VitalSignWS" provider="java:RPC" style="wrapped" use="literal">
+  <ns2:operation name="userLogin" qname="ns1:userLogin" returnQName="ns1:userLoginReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://service.vital" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
+   <ns2:parameter qname="ns1:uname" type="xsd:string"/>
+   <ns2:parameter qname="ns1:pwd" type="xsd:string"/>
+  </ns2:operation>
+  <ns1:operation name="viewProfile" qname="ns2:viewProfile" returnQName="ns2:viewProfileReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://service.vital" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns2:uname" type="xsd:string"/>
+   <ns1:parameter qname="ns2:pwd" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="addVitals" qname="ns3:addVitals" returnQName="ns3:addVitalsReturn" returnType="xsd:string" soapAction="" xmlns:ns3="http://service.vital" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns3:uname" type="xsd:string"/>
+   <ns1:parameter qname="ns3:vitalType" type="xsd:string"/>
+   <ns1:parameter qname="ns3:vitalValue" type="xsd:string"/>
+   <ns1:parameter qname="ns3:unitOfMeasure" type="xsd:string"/>
+   <ns1:parameter qname="ns3:partyID" type="xsd:string"/>
+   <ns1:parameter qname="ns3:encounterID" type="xsd:string"/>
+   <ns1:parameter qname="ns3:authToken" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="getVitals" qname="ns4:getVitals" returnQName="ns4:getVitalsReturn" returnType="xsd:string" soapAction="" xmlns:ns4="http://service.vital" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns4:uname" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="updateVitals" qname="ns5:updateVitals" returnQName="ns5:updateVitalsReturn" returnType="xsd:string" soapAction="" xmlns:ns5="http://service.vital" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns5:uname" type="xsd:string"/>
+   <ns1:parameter qname="ns5:vitalType" type="xsd:string"/>
+   <ns1:parameter qname="ns5:vitalValue" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="viewProfile updateVitals userLogin addVitals getVitals"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="VitalSignWS"/>
+  <ns1:parameter name="className" value="vital.service.VitalSignWS"/>
+  <ns1:parameter name="wsdlServicePort" value="VitalSignWS"/>
+  <ns1:parameter name="schemaQualified" value="http://service.vital"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://service.vital"/>
+  <ns1:parameter name="wsdlServiceElement" value="VitalSignWSService"/>
+ </ns1:service>
+ <ns1:service name="AdminService" provider="java:MSG">
+  <ns1:parameter name="allowedMethods" value="AdminService"/>
+  <ns1:parameter name="enableRemoteAdmin" value="false"/>
+  <ns1:parameter name="className" value="org.apache.axis.utils.Admin"/>
+  <ns1:namespace>http://xml.apache.org/axis/wsdd/</ns1:namespace>
+ </ns1:service>
+ <ns1:service name="Version" provider="java:RPC">
+  <ns1:parameter name="allowedMethods" value="getVersion"/>
+  <ns1:parameter name="className" value="org.apache.axis.Version"/>
+ </ns1:service>
+ <ns1:transport name="http">
+  <ns1:requestFlow>
+   <ns1:handler type="URLMapper"/>
+   <ns1:handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler"/>
+  </ns1:requestFlow>
+  <ns1:parameter name="qs:list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <ns1:parameter name="qs:wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+  <ns1:parameter name="qs.list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <ns1:parameter name="qs.method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <ns1:parameter name="qs:method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <ns1:parameter name="qs.wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+ </ns1:transport>
+ <ns1:transport name="local">
+  <ns1:responseFlow>
+   <ns1:handler type="LocalResponder"/>
+  </ns1:responseFlow>
+ </ns1:transport>
+</ns1:deployment>

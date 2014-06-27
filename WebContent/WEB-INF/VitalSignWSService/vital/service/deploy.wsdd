@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from VitalSignWSService WSDL service -->
+
+  <service name="VitalSignWS" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://service.vital"/>
+      <parameter name="wsdlServiceElement" value="VitalSignWSService"/>
+      <parameter name="schemaQualified" value="http://service.vital"/>
+      <parameter name="wsdlServicePort" value="VitalSignWS"/>
+      <parameter name="className" value="vital.service.VitalSignWS"/>
+      <parameter name="wsdlPortType" value="VitalSignWS"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://service.vital" xmlns:retNS="http://service.vital" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="userLogin" qname="operNS:userLogin" returnQName="retNS:userLoginReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://service.vital" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:uname" type="tns:string"/>
+        <parameter xmlns:pns="http://service.vital" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:pwd" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://service.vital" xmlns:retNS="http://service.vital" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="viewProfile" qname="operNS:viewProfile" returnQName="retNS:viewProfileReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://service.vital" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:uname" type="tns:string"/>
+        <parameter xmlns:pns="http://service.vital" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:pwd" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://service.vital" xmlns:retNS="http://service.vital" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="addVitals" qname="operNS:addVitals" returnQName="retNS:addVitalsReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://service.vital" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:uname" type="tns:string"/>
+        <parameter xmlns:pns="http://service.vital" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:vitalType" type="tns:string"/>
+        <parameter xmlns:pns="http://service.vital" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:vitalValue" type="tns:string"/>
+        <parameter xmlns:pns="http://service.vital" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:unitOfMeasure" type="tns:string"/>
+        <parameter xmlns:pns="http://service.vital" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:partyID" type="tns:string"/>
+        <parameter xmlns:pns="http://service.vital" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:encounterID" type="tns:string"/>
+        <parameter xmlns:pns="http://service.vital" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:authToken" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://service.vital" xmlns:retNS="http://service.vital" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getVitals" qname="operNS:getVitals" returnQName="retNS:getVitalsReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://service.vital" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:uname" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://service.vital" xmlns:retNS="http://service.vital" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateVitals" qname="operNS:updateVitals" returnQName="retNS:updateVitalsReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://service.vital" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:uname" type="tns:string"/>
+        <parameter xmlns:pns="http://service.vital" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:vitalType" type="tns:string"/>
+        <parameter xmlns:pns="http://service.vital" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:vitalValue" type="tns:string"/>
+      </operation>
+      <parameter name="allowedMethods" value="viewProfile updateVitals userLogin addVitals getVitals"/>
+
+  </service>
+</deployment>
